@@ -111,3 +111,65 @@ Footer底部【首页，搜索页】登录页，注册页 没有
 
 2023年2月13日21:17:11
 
+#5路由组件的搭建
+vue-router
+命令：npm install vue-router@3.5.3 
+在上面分析时候，路由组件应该有4个：Hmoe，Search，Login，Register
+
+-components文件夹：经常放置非路由组件（共用全局组件）
+-pages|views文件夹：经常放置路由组件
+
+#5.1配置路由
+项目当中配置的路由一般放置在router文件夹中
+
+#5.2总结
+路由组件 与 非路由组件 的区别？
+1.路由组件一般放置在pages | views 文件夹中 非路由组件一般放置components文件夹中
+2.路由组件一般需要在router文件夹中进行注册（使用的即为组件的名字），非路由组件在使用时候，一般是以标签的形式使用
+3.注册完路由，不管路由组件，还是非路由组件身上都有$route,$router属性
+
+$route：一般获取路由信息【路径，query，params等等】
+$router：一般进行编程式导航 进行路由跳转【push|replace】
+
+#5.3 路由的跳转
+路由的跳转有两种形式，
+声明式导航router-link，可以进行路由的跳转
+编程式导航push|replace，可以进行路由的跳转
+
+编程式导航：声明式能做的 编程式都能做，编程式除了进行路由跳转还有其他的业务功能
+
+#6 Footer组件显示与隐藏
+显示或者隐藏组件：v-if  |  v-show
+Footer组件：在Home，Search显示，在Login，R注册时候的消失的
+<Footer v-show="$route.path=='/home'||$route.path=='/search'"></Footer>  
+千万别写 【./home】【./search】
+
+6.1我们可以根据组件身上的$route 获取当前路由的信息 通过 路由路径判断Footer显示与隐藏
+6.2配置路由时候，可以给路由配置元信息【mata】路由需要配置对象，key v不能乱取名 乱写 
+meta:{show:false}
+ v-show="$route.meta.show
+
+ #8路由传参
+ 8.1路由跳转有几种方式？
+ 声明式导航：router-link（务必有to属性），可以实现路由的跳转
+ 编程式导航：利用的是组件实例的$router.push |replace方法 可以跳转（可以写自己的业务）
+
+ 8.2路由传参 参数有几种写法？
+ params参数:属于路径当中的一部分，需要注意，在配置路由的时候，需要占位
+query参数:不属于路径当中的一部分，类似于ajax中的queryString     /home?k=v&kv=,不需要占位
+
+9)路由传参相关面试题
+1:路由传递参数（对象写法）path是否可以结合params参数一起使用?
+2:如何指定params参数可传可不传?
+比如:配置路由的时候，占位了(params参数)，但是路由跳转的时候就不传递。路径会出现问题
+http://localhost:808e/#/?k=QWE
+http://localhost:8080/#/search
+
+3:params参数可以传递也可以不传递，但是如果传递是空串，如何解决?
+4:路由组件能不能传递props数据?
+
+
+
+
+
+

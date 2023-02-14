@@ -7,8 +7,10 @@
                     <p>尚品汇欢迎您！</p>
                     <p>
                         <span>请</span>
-                        <a href="###">登录</a>
-                        <a href="###" class="register">免费注册</a>
+                        <!-- 声明式导航务必要有to属性 -->
+                        <router-link to="/login">登录</router-link>
+                        <!-- <a href="###">登录</a> -->
+                        <router-link class="register" to="/register">免费注册</router-link>
                     </p>
                 </div>
                 <div class="typeList">
@@ -26,14 +28,14 @@
         <!--头部第二行 搜索区域-->
         <div class="bottom">
             <h1 class="logoArea">
-                <a class="logo" title="尚品汇" href="###" target="_blank">
+                <router-link class="logo" to="/home">
                     <img src="./images/logo.png" alt="">
-                </a>
+                </router-link>
             </h1>
             <div class="searchArea">
                 <form action="###" class="searchForm">
-                    <input type="text" id="autocomplete" class="input-error input-xxlarge" />
-                    <button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
+                    <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
+                    <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">搜索</button>
                 </form>
             </div>
         </div>
@@ -43,7 +45,51 @@
 
 <script>
 export default {
+    name: "",
+    data() {
+        return {
+            keyword: ''
+        }
+    },
+    methods: {
+        //搜索按钮的回调函数，需要向Search路由进行跳转
+        goSearch() {
+            //路由传参：
+            //第一种：字符串形式
+            // this.$router.push('/search/'+this.keyword+"?k="+this.keyword.toUpperCase())
+            //第二种模板字符串
+            // this.$router.push(`/search/${this.keyword}?k=${this.keyword.toUpperCase()}`)
+            //第三种对象写法【常用】
+            // this.$router.push({name:'search',params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
+            // -----------------------------------------------------------------
 
+            //面试题1:路由传递参数（对象写法）path是否可以结合params参数一起使用?
+            // 答：不能，由跳转传参的时候，对象的写法可以是name、path形式，但是需要注意的是，path这种写法不能与params参数一起使用
+            // this .$router.push({path : ' /search ' ,params: {keyword:this.keyword} , query:{k:this.keyword.toUpperCase()}})
+
+            //2:如何指定params参数可传可不传?
+            //2:如何指定params参数可传可不传?
+            //如果路由要求传递params参数 但是你不传递 URL会出问题
+            //如何指定params参数  可以传递  可以不传递 配置路由时候加上？ 代表params传递不传递都可以 
+            // this.$router.push({name:'search',query:{k:this.keyword.toUpperCase()}})
+
+            // 面试3:params参数可以传递也可以不传递，但是如果传递是空串，如何解决?
+            //使用undefined解决  传递/不传递 空字符串问题
+            // this.$router.push({name:'search',params:{keyword:''||undefined},query:{k:this.keyword.toUpperCase()}})
+
+            // 面试题4:路由组件能不 能传递props数据?
+            //可以 三种写法
+            this.$router.push({name:'search',params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
+
+
+
+
+
+
+
+        },
+
+    }
 }
 </script>
 
