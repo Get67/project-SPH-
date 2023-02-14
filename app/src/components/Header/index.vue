@@ -80,7 +80,7 @@ export default {
             // 面试题4:路由组件能不 能传递props数据?
             //可以 三种写法
             this.$router.push({name:'search',params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
-
+            
 
 
 
