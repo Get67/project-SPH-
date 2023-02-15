@@ -32,6 +32,84 @@ push是VueRouter类的一个原型方法
 --动态业务
 
 
+#3：三级联动组件完成
+--由于三级联动，在Home Search Detail 把三级联动注册为全局组件
+好处：一次注册，就可以在项目任意位置使用
+
+#4:完成其余静态组件 
+HTML css 图片-----结构 样式 图片资源
+
+
+#5 postman测试接口
+postcode 插件测试接口
+
+get：
+http://gmall-h5-api.atguigu.cn/api/product/getBaseCategoryList
+
+--刚刚经过postman工具测试，接口是没有问题的
+--如果服务器返回的数据code字段200，代表服务器返回数据成功
+--整个项目，接口前缀都有/api字样
+
+#6axios 二次封装
+向服务器发请求：XMLHttpRequest、fetch、JQ、axios 
+
+
+6.1为什么二次封装？
+请求拦截器、响应拦截器:请求拦截器，可以在发请求之前可以处理一些业务、响应拦截器，当服务器数据返回以后，可以处理一些事情
+
+6.2在项目当中经常出现API文件夹   一般是关于axios
+接口中 路径带有/api
+
+  baseURL:"/api"    
+//基础路径 发请求时候路径中会出现api
+http://gmall-h5-api.atguigu.cn/api/product/getBaseCategoryList
+
+
+6.3可看axios 文档
+
+
+#7：API接口统一管理
+
+项目很小：完全可以组件生命周期函数中发请求
+项目大：axios.get（'xxx'）  统一管理 
+
+#7.1跨域问题 
+什么是跨域:协议、域名、端口号不同请求，称之为跨域
+
+http://localhost:8080/#/home----前端项目本地服务器
+http://39.98.123.211----后台服务器
+http://gmall-h5-api.atguigu.cn 后台服务器更新
+
+SONP、CROS、代理   可以解决
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
