@@ -9,6 +9,8 @@
     <Floor/>
     <Floor/>
     <Brand/>
+
+
   </div>
 </template>
 
@@ -20,6 +22,10 @@ import Like from '@/pages/Home/Like'
 import Floor from '@/pages/Home/Floor'
 import Brand from '@/pages/Home/Brand'
 
+import { mapState } from 'vuex'
+
+
+
 export default {
   name:'',
   components:{
@@ -29,6 +35,16 @@ export default {
     Like,
     Floor,
     Brand
+  },
+  computed:{
+    ...mapState(['count'])
+  },
+  methods:{
+    add(){
+      //派发 action
+     this.$store.dispatch('add');
+
+    }
   }
 }
 </script>

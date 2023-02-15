@@ -83,6 +83,60 @@ http://gmall-h5-api.atguigu.cn 后台服务器更新
 SONP、CROS、代理   可以解决
 
 
+#8 nprogress进度条的使用
+start 进度条开始 done 进度条结束
+颜色去 nprogress.css里 bar 修改
+
+
+#9vuex状态管理库
+
+vuex是官方提供一个插件，状态管理库，集中式管理项目中组件共用的数据。
+切记，并不是全部项目都需要Vuex，如果项目很小，完全不需要Vuex，如果项目很大，组件很多、数据很多，数据维护很费劲，vuex
+state
+mutation
+sactions
+getters
+modules
+
+个人问题
+我写的
+const actions = {
+    add(context){
+        context.commit("ADD")
+    }
+};
+
+老师的
+const actions = {
+    add(commit){
+        commit("ADD")
+    }
+};
+百度：
+实践中，咱们会常常用到 ES2015 的 参数解构来简化代码（特别是咱们须要调用 commit不少次的时候）：
+老师的是 参数解构 来简化代码 
+
+但是我实际用却不行
+
+
+
+9.2 vuex 基本使用
+
+9.3 vuex 模块化开发
+如果项目过大，组件过多，接口也很多，数据也很多,可以让Vuex实现模块式开发模拟state存储数据
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
