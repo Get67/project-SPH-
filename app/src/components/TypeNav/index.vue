@@ -1,5 +1,4 @@
-<template>
-    <!-- 商品分类导航 -->
+<template><!-- 商品分类导航 -->
     <div class="type-nav">
 
 
@@ -10,23 +9,27 @@
                 <h2 class="all">全部商品分类</h2>
                 <!-- 三级联动 -->
                 <div class="sort">
-                    <div class="all-sort-list2">
+                    <!-- 事件委派+编程式导航  实现路由跳转 -->
+                    <div class="all-sort-list2" @click="goSearch">
                         <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId"
                             :class="{ curr: currentIndex == index }">
 
                             <h3 @mouseenter="changeIndex(index)">
-                                <a href="">{{ c1.categoryName }}</a>
+                                <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
+                            
                             </h3>
                             <!-- 二级三级分类 -->
                             <div class="item-list clearfix" :style="{ display: currentIndex == index ? 'block' : 'none' }">
                                 <div class="subitem" v-for="(c2, index) in c1.categoryChild" :key="c2.categoryId">
                                     <dl class="fore">
                                         <dt>
-                                            <a href="">{{ c2.categoryName }}</a>
+                                            <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName }}</a>
+                                          
                                         </dt>
                                         <dd>
                                             <em v-for="(c3, index) in c1.categoryChild" :key="c3.categoryId">
-                                                <a href="">{{ c3.categoryName }}</a>
+                                                <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName }}</a>
+                                           
                                             </em>
 
                                         </dd>
@@ -50,8 +53,7 @@
             </nav>
 
         </div>
-    </div>
-
+</div>
 </template>
 
 <script>
@@ -89,16 +91,50 @@ export default {
         //鼠标进入修改响应式数据currentIndex
         // throttle回调函数别用箭头函数，可能出现上下文this
 
-        changeIndex:throttle(function(index){
-                    //     //index:鼠标移上某一个一级分类的元素的索引值
-        //     //正常情况（用户慢慢的操作）:鼠标进入，每一个一级分类h3，都会触发鼠标进入事件
-        //     //非正常情况（用户操作很快):本身全部的一级分类都应该触发鼠标进入事件，但是经过测试，只有部分h3触发了//就是由于用户行为过快，导致浏览器反应不过来。如果当前回调函数中有一些大量业务，
+        changeIndex: throttle(function (index) {
+            //     //index:鼠标移上某一个一级分类的元素的索引值
+            //     //正常情况（用户慢慢的操作）:鼠标进入，每一个一级分类h3，都会触发鼠标进入事件
+            //     //非正常情况（用户操作很快):本身全部的一级分类都应该触发鼠标进入事件，但是经过测试，只有部分h3触发了//就是由于用户行为过快，导致浏览器反应不过来。如果当前回调函数中有一些大量业务，
 
             this.currentIndex = index
-        },50),
+        }, 50),
         //一级分类鼠标移除的事件回调
         leaveIndex() {
             this.currentIndex = -1
+        },
+        goSearch(){
+            //最好是用 编程式导航 + 事件委派
+            //存在一些问题:事件委派，是把全部的子节点【h3、dt、dl、em】的事件委派给父亲节点
+            //点击a标签的时候，才会进行路由跳转【怎么能确定点击的一定是a标签】
+            //存在另外一个问题:即使你能确定点击的是a标签，如何区分是一级、二级、三级分类的标签。
+            
+            //第一个问题 把子节点中 a标签 我加上自定义属性 我加上:data-categoryName="c1.categoryName" 其余节点没有
+            let element = event.target
+            // console.log(element);
+            // 获取 当前触发事件的节点 需要带有:data-categoryName="c1.categoryName"的节点  因为他一定是a标签
+            let {categoryname,category1id,category2id,category3id} = element.dataset;
+            //如果标签上有categoryname  一定是a标签
+            if(categoryname){
+                //一级分类 二级 三级  
+                //整理路由跳转参数
+                //小写的是自定义的属性值，大写的是新添加的属性值
+                //如果你们没有跳转，我建议你们把所有标签写驼峰，if判断写小写
+                //解释一下不显示search路由的原因，通过name进行跳转页面，所以在router和page的search下name修改一致即可
+                //路径中没有search在路由配置文件中搜索配置那边加上name:"search"即可
+                let location = {name:'search'}
+                let query = {categoryName:categoryname}
+                if(category1id){
+                    query.category1id = category1id
+                }else if(category2id){
+                    query.category2id = category2id
+                }else if(category3id){
+                    query.category3id = category3id
+                }
+                //整理完参数
+                location.query =query
+                //路由跳转
+                this.$router.push(location)
+            }
         }
     }
 }
