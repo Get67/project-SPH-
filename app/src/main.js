@@ -14,6 +14,9 @@ import store from './store';
 
 //Vue.config.productionTip = false
 //let a = 10000 ;
+//引入mockserver.js
+import '@/mock/mockServe'
+
 
 
 new Vue({

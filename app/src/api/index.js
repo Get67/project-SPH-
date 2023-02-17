@@ -1,7 +1,7 @@
 //当前模块 API 统一管理
 
 import requests from "./request";
-
+import mockRequests from "./mockAjax";
 
 
 //三级联动接口
@@ -12,7 +12,12 @@ import requests from "./request";
 //http://localhost:8080/api【这个api是request.js中  baseURL:"/api" ,】/api【这个api是他本身url就叫/api】/product/getBaseCategoryList
 export const reqCategoryList = ()=>requests({url:'/api/product/getBaseCategoryList',method:'get'}) ;  
 
+
+
+
     
+// 获取banner home 轮播图的接口
+export const reqGetBannerList = ()=>mockRequests.get('/banner')
 
 
 
