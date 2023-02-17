@@ -11,6 +11,8 @@ import router from './router';
 //引入仓库
 import store from './store';
 
+//引入swiper样式
+import "swiper/css/swiper.css"
 
 //Vue.config.productionTip = false
 //let a = 10000 ;
@@ -26,7 +28,8 @@ new Vue({
   router,
 
   //注册仓库  组件实例的身上 会 多一个属性 $store 属性
-  store
+  store,
+
 
 
 

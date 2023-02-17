@@ -69,3 +69,21 @@ mock 模拟 ： 模拟数据 需要 mockjs
 第三步把mock数据需要的图片放置到public文件夹中【public】文件夹在打包的时候，会把相应的资源原封不动打包到dist文件夹中
 第四步 开始模拟 mockjs模拟数据  创建mockServe.js
 第五步 mockServe.js文件 在入口文件中引入 至少执行一次 才能模拟数据
+
+
+
+
+5 轮播图开发 
+swiper
+第一步 引入 包         npm i swiper@5
+第二步 页面结构 务必要有 不能改
+第三步 页面中有结构 再new swiper 实例 （轮播图添加效果）
+
+
+
+
+
+
+
+
+
