@@ -98,28 +98,32 @@
 <script>
 import { mapState } from "vuex";
 //引入swiper
-import Swiper from 'swiper'
+import Swiper from "swiper";
 export default {
   mounted() {
+    //mounted 代表组件挂载完毕 组件结构 dom 已经全有了
+    //注意 动态时候 mounted 数据 不会马上加载完毕  请求发出 接受数据
+    //为什么swiper实例在mounted 中 直接用不行  因为结构不完整
     //派发action  发起ajax请求 将数据存储在仓库中
     this.$store.dispatch("getBannerList");
     //在new swiper之前 页面结构必须要有   放mounted 不行 结构还没完整
-    setTimeout(() => {
-      var mySwiper = new Swiper(
-      document.querySelector(".swiper-container"), {
-        loop: true,
-        // 如果需要分页器
-        pagination: {
-          el: ".swiper-pagination",
-          clickable:true
-        },
-        // 如果需要前进后退按钮
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-      })
-    }, 1000);
+    //定时器方法
+    // setTimeout(() => {
+    //   var mySwiper = new Swiper(
+    //   document.querySelector(".swiper-container"), {
+    //     loop: true,
+    //     // 如果需要分页器
+    //     pagination: {
+    //       el: ".swiper-pagination",
+    //       clickable:true
+    //     },
+    //     // 如果需要前进后退按钮
+    //     navigation: {
+    //       nextEl: ".swiper-button-next",
+    //       prevEl: ".swiper-button-prev",
+    //     },
+    //   })
+    // }, 1000);
   },
 
   computed: {
@@ -127,7 +131,33 @@ export default {
       bannerList: (state) => state.home.bannerList,
     }),
   },
-
+  watch: {
+    //监听 bannerlist 数据变化
+    bannerList: {
+      handler(newValue, oldValue) {
+        //如果执行handler 说明 实例身上已经有属性了 新的属性已经进入bannerlist里了
+       //只能保证bannerlist的数据已经有了  但是不能保证 v-for 执行结束没有   所以要加入nextTick 
+        //nextTick 下次dom更新 循环结束之后 执行延迟回调  在修改数据之后立即使用这个方法 获取更新后的dom
+        this.$nextTick(()=>{
+          //当你执行这个回调  已经保证v-for完毕了  轮播图的结构已经有了
+          var mySwiper = new Swiper(document.querySelector(".swiper-container"), {
+          loop: true,
+          // 如果需要分页器
+          pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+          },
+          // 如果需要前进后退按钮
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+          autoplay:true,//等同于以下设置 可以自动循环播放
+        });
+        })
+      },
+    },
+  },
 };
 </script>
 
