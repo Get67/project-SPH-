@@ -92,7 +92,7 @@ export default {
   props: ["list"],
   mounted(){
     //第一次写swiper 时候 在mounted 写不可以 
-    //为什么这里可以 
+    //为什么这里可以    
     
     var mySwiper = new Swiper(
             this.$refs.cur, 
