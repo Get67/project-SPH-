@@ -8,6 +8,13 @@ Vue.component(TypeNav.name,TypeNav)
 //引入路由
 import router from './router';
 
+//轮播图全局组件
+import Carousel from '@/components/Carousel';
+Vue.component(Carousel.name,Carousel)
+
+
+
+
 //引入仓库
 import store from './store';
 

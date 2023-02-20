@@ -4,23 +4,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" ref="mySwiper">
-          <div class="swiper-wrapper">
-            <div
-              class="swiper-slide"
-              v-for="(carousel, index) in bannerList"
-              :key="carousel.id"
-            >
-              <img :src="carousel.imgUrl" />
-            </div>
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <Carousel :list="bannerList"/>
       </div>
       <div class="right">
         <div class="news">
@@ -98,7 +82,7 @@
 <script>
 import { mapState } from "vuex";
 //引入swiper
-import Swiper from "swiper";
+
 export default {
   mounted() {
     //mounted 代表组件挂载完毕 组件结构 dom 已经全有了
@@ -131,36 +115,37 @@ export default {
       bannerList: (state) => state.home.bannerList,
     }),
   },
-  watch: {
-    //监听 bannerlist 数据变化
-    bannerList: {
-      handler(newValue, oldValue) {
-        //如果执行handler 说明 实例身上已经有属性了 新的属性已经进入bannerlist里了
-       //只能保证bannerlist的数据已经有了  但是不能保证 v-for 执行结束没有   所以要加入nextTick 
-        //nextTick 下次dom更新 循环结束之后 执行延迟回调  在修改数据之后立即使用这个方法 获取更新后的dom
-        this.$nextTick(()=>{
-          //当你执行这个回调  已经保证v-for完毕了  轮播图的结构已经有了
+  // watch: {
+  //   //监听 bannerlist 数据变化
+  //   bannerList: {
+  //     immediate:true,
+  //     handler(newValue, oldValue) {
+  //       //如果执行handler 说明 实例身上已经有属性了 新的属性已经进入bannerlist里了
+  //      //只能保证bannerlist的数据已经有了  但是不能保证 v-for 执行结束没有   所以要加入nextTick 
+  //       //nextTick 下次dom更新 循环结束之后 执行延迟回调  在修改数据之后立即使用这个方法 获取更新后的dom
+  //       this.$nextTick(()=>{
+  //         //当你执行这个回调  已经保证v-for完毕了  轮播图的结构已经有了
           
-          var mySwiper = new Swiper(
-            this.$refs.mySwiper, 
-          {
-          loop: true,
-          // 如果需要分页器
-          pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-          },
-          // 如果需要前进后退按钮
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          },
-          autoplay:true,//等同于以下设置 可以自动循环播放
-        });
-        })
-      },
-    },
-  },
+  //         var mySwiper = new Swiper(
+  //           this.$refs.mySwiper, 
+  //         {
+  //         loop: true,
+  //         // 如果需要分页器
+  //         pagination: {
+  //           el: ".swiper-pagination",
+  //           clickable: true,
+  //         },
+  //         // 如果需要前进后退按钮
+  //         navigation: {
+  //           nextEl: ".swiper-button-next",
+  //           prevEl: ".swiper-button-prev",
+  //         },
+  //         autoplay:true,//等同于以下设置 可以自动循环播放
+  //       });
+  //       })
+  //     },
+  //   },
+  // },
 };
 </script>
 
