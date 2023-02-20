@@ -2,12 +2,14 @@
 
 import { reqCategoryList } from '@/api'
 import { reqGetBannerList } from '@/api'
+import { reqFloorList } from '@/api'
 
 const state = {
     //state 中的数据 默认初始值 别乱写 
     categoryList:[],
     //轮播图数组
-    bannerList:[]
+    bannerList:[],
+    floorList:[],
 };
 
 const mutations = {
@@ -17,7 +19,10 @@ const mutations = {
     },
     GETBANNERLIST(state, bannerList){
         state.bannerList = bannerList;
-    }
+    },
+    GETFLOORLIST(state, floorList){
+        state.floorList = floorList;
+    },
 
 
 };
@@ -38,9 +43,18 @@ const actions = {
         commit("GETBANNERLIST", result.data)
     }
        
-    }
+    },
+    async getFloorList({commit}){
+        let result = await reqFloorList();
+        if (result.code == 200) {
+         commit("GETFLOORLIST", result.data)
+     }
+        
+     },
+
 };
 
+//计算属性
 
 const getters = {};
 

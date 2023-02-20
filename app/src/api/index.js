@@ -21,7 +21,8 @@ export const reqGetBannerList = ()=>mockRequests.get('/banner')
 
 
 
-
+//获取floor 组件的数据
+export const reqFloorList = ()=>mockRequests.get('/floor')
 
 
 

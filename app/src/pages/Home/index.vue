@@ -6,8 +6,8 @@
     <Recommend/>
     <Rank/>
     <Like/>
-    <Floor/>
-    <Floor/>
+    <Floor v-for="(floor,index) in floorList" :key=floor.id  :list="floor"/>
+
     <Brand/>
 
 
@@ -37,7 +37,7 @@ export default {
     Brand
   },
   computed:{
-    ...mapState(['count'])
+    ...mapState( {floorList:state=>state.home.floorList})
   },
   methods:{
     add(){
@@ -45,7 +45,12 @@ export default {
      this.$store.dispatch('add');
 
     }
-  }
+  },
+  mounted(){
+    //获取floor 组件的数据
+    this.$store.dispatch("getFloorList")
+  },
+
 }
 </script>
 

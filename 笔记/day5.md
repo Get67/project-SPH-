@@ -67,9 +67,31 @@ $nextTick :可以保证也页面中的{结构一定是有的}，经常和很多�
 
 
 
+2 开发floor 组件
+切记 仓库中的state数据 别瞎写 乱写   数据格式取决于 服务器返回的数据
+格式要对应
+
+2.1 getFloorList 这个action在哪里触发 
+需要在home路由组件中发   可以v-for 发给两个floor 遍历组件
+v-for 也可以在自定义标签中使用 
+
+C:\Users\Administrator\Desktop\project-SPH\app\src\store\home\index.js
+
+C:\Users\Administrator\Desktop\project-SPH\app\src\pages\Home\index.vue
+
+两个文件中的floorList 名字要相同 不然传递两个 floorlist 一个有数据一个空数据
 
 
+2.3父子通信的方式
+home→floor 
 
+方式：
+props 父子组件通信
+自定义事件  子父
+全局事件总线
+pubsub-js全能
+插槽
+vuex
 
 
 
