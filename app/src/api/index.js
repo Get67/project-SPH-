@@ -25,6 +25,30 @@ export const reqGetBannerList = ()=>mockRequests.get('/banner')
 export const reqFloorList = ()=>mockRequests.get('/floor')
 
 
+//获取搜索模块数据 地址/api/list  请求方式 post 参数
+//当前接口 给服务器传递params 至少是一个空对象
+//获取搜索模块的数据 传递一个默认参数 至少是一个空对象 
+export const reqGetSearchInfo = (paramas) =>requests({url:"/api/list",method:'post',data:paramas})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

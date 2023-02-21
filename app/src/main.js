@@ -12,7 +12,9 @@ import router from './router';
 import Carousel from '@/components/Carousel';
 Vue.component(Carousel.name,Carousel)
 
-
+// //测试
+// import {reqGetSearchInfo} from '@/api'
+// console.log(reqGetSearchInfo({}));
 
 
 //引入仓库

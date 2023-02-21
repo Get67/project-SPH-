@@ -336,6 +336,10 @@
 
     components: {
       SearchSelector
+    },
+    mounted(){
+      //先测试 数据返回格式
+      this.$store.dispatch('getSearchList',{})
     }
   }
 </script>
