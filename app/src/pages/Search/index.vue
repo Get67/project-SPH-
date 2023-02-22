@@ -22,12 +22,17 @@
               {{ searchParams.keyword }}
               <i @click="removeKeyword">×</i>
             </li>
+            <!-- 品牌的面包屑 -->
+            <li class="with-x" v-if="searchParams.trademark">
+              {{ searchParams.trademark.split(":")[1] }}
+              <i @click="removeTrademark">×</i>
+            </li>
 
           </ul>
         </div>
-
+        
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector @trademarkInfo="trademarkInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -222,8 +227,20 @@ export default {
 
       }
 
+    },
+    //自定义事件回调
+    trademarkInfo(trademark){
+      
+      this.searchParams.trademark=`${trademark.tmId}:${trademark.tmName}`
+      //再次发请求获取search模块数据
+      this.getData()
+    },
+    //删除品牌的信息
+    removeTrademark(){
+      this.searchParams.trademark=""
+      this.getData()
     }
-  },
+    },
   //数据监听  监听组件实例身上的属性的属性值变化
   watch: {
     //监听路由的信息是否发生变化  发生变化再次请求
