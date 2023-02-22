@@ -12,10 +12,15 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-
+            <!-- 分类的面包屑 -->
             <li class="with-x" v-if="searchParams.categoryName">
               {{ searchParams.categoryName }}
               <i @click="removeCategoryName">×</i>
+            </li>
+            <!-- 关键字的面包屑 -->
+            <li class="with-x" v-if="searchParams.keyword">
+              {{ searchParams.keyword }}
+              <i @click="removeKeyword">×</i>
             </li>
 
           </ul>
@@ -53,7 +58,8 @@
           <!-- 销售产品list -->
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5" v-for="(good, index) in goodsList" :key="good.id">
+             
+              <li class="yui3-u-1-5" v-for="(good,index) in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
                     <a href="item.html" target="_blank">
@@ -197,6 +203,22 @@ export default {
 
       if (this.$route.params) {
         this.$router.push({ name: 'search', params: this.$route.params })
+
+      }
+
+    },
+    //删除关键字
+    removeKeyword(){
+      //给服务器带的参数searchParams的keyword置空
+      this.searchParams.keyword=undefined
+      this.getData()
+
+      //通知兄弟组件header 清楚关键字
+      this.$bus.$emit('clear')
+      //路由跳转
+
+      if (this.$route.query) {
+        this.$router.push({ name: 'search', query: this.$route.query })
 
       }
 

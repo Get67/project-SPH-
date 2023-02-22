@@ -39,7 +39,10 @@ new Vue({
   //注册仓库  组件实例的身上 会 多一个属性 $store 属性
   store,
 
-
+  //全局事件总线$bus的配置
+  beforeCreate(){
+    Vue.prototype.$bus = this
+  },
 
 
 
