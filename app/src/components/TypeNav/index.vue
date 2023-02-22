@@ -11,47 +11,22 @@
           <div class="sort" v-show="show">
             <!-- 事件委派+编程式导航  实现路由跳转 -->
             <div class="all-sort-list2" @click="goSearch">
-              <div
-                class="item"
-                v-for="(c1, index) in categoryList"
-                :key="c1.categoryId"
-                :class="{ curr: currentIndex == index }"
-              >
+              <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId" :class="{ curr: currentIndex == index }">
                 <h3 @mouseenter="changeIndex(index)">
-                  <a
-                    :data-categoryName="c1.categoryName"
-                    :data-category1Id="c1.categoryId"
-                    >{{ c1.categoryName }}</a
-                  >
+                  <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
                 </h3>
                 <!-- 二级三级分类 -->
-                <div
-                  class="item-list clearfix"
-                  :style="{ display: currentIndex == index ? 'block' : 'none' }"
-                >
-                  <div
-                    class="subitem"
-                    v-for="(c2, index) in c1.categoryChild"
-                    :key="c2.categoryId"
-                  >
+                <div class="item-list clearfix" :style="{ display: currentIndex == index ? 'block' : 'none' }">
+                  <div class="subitem" v-for="(c2, index) in c1.categoryChild" :key="c2.categoryId">
                     <dl class="fore">
                       <dt>
-                        <a
-                          :data-categoryName="c2.categoryName"
-                          :data-category2Id="c2.categoryId"
-                          >{{ c2.categoryName }}</a
-                        >
+                        <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName
+                        }}</a>
                       </dt>
                       <dd>
-                        <em
-                          v-for="(c3, index) in c1.categoryChild"
-                          :key="c3.categoryId"
-                        >
-                          <a
-                            :data-categoryName="c3.categoryName"
-                            :data-category3Id="c3.categoryId"
-                            >{{ c3.categoryName }}</a
-                          >
+                        <em v-for="(c3, index) in c2.categoryChild" :key="c3.categoryId">
+                          <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName
+                          }}</a>
                         </em>
                       </dd>
                     </dl>
@@ -155,9 +130,9 @@ export default {
           query.category3id = category3id;
         }
 
-       location.params = this.$route.params
+        location.params = this.$route.params
         location.query = query
-        
+
         this.$router.push(location)
 
       }
@@ -286,6 +261,7 @@ export default {
         }
       }
     }
+
     //过度动画样式
     //进入状态
     .sort-enter {
@@ -293,6 +269,7 @@ export default {
       opacity: 0;
       overflow: hidden;
     }
+
     //结束状态
     //刚刚那个动画建议把height过渡改为opacity: 0;-1，效果会好很多
     .sort-enter-to {
@@ -300,6 +277,7 @@ export default {
       opacity: 1;
       overflow: hidden;
     }
+
     .sort-enter-active {
       transition: all 0.5s linear;
     }

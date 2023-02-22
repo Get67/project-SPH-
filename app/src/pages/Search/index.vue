@@ -74,9 +74,13 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a target="_blank" href="item.html" title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】">
+                    <a
+                      target="_blank"
+                      href="item.html"
+                      title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
+                    >
                       {{ good.
-                        title }}
+                      title }}
                     </a>
                   </div>
                   <div class="commit">
@@ -86,7 +90,11 @@
                     </i>
                   </div>
                   <div class="operate">
-                    <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
+                    <a
+                      href="success-cart.html"
+                      target="_blank"
+                      class="sui-btn btn-bordered btn-danger"
+                    >加入购物车</a>
                     <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
                   </div>
                 </div>
@@ -134,10 +142,10 @@
 </template>
 
 <script>
-import SearchSelector from './SearchSelector/SearchSelector'
-import { mapGetters } from 'vuex'
+import SearchSelector from "./SearchSelector/SearchSelector";
+import { mapGetters } from "vuex";
 export default {
-  name: 'Search',
+  name: "Search",
 
   components: {
     SearchSelector
@@ -146,52 +154,67 @@ export default {
     return {
       searchParams: {
         //一级分类的id
-        "category1Id": "",
+        category1Id: "",
         //二级
-        "category2Id": "",
+        category2Id: "",
         //三级
-        "category3Id": "",
+        category3Id: "",
         //分类名字
-        "categoryName": "",
+        categoryName: "",
         //关键字
-        "keyword": "",
+        keyword: "",
         //排序
-        "order": "",
+        order: "",
         //当前第几页 默认1
-        "pageNo": 1,
+        pageNo: 1,
         //每一页展示 数据个数
-        "pageSize": 3,
+        pageSize: 3,
         //平台售卖属性的参数
-        "props": [],
+        props: [],
         //品牌
-        "trademark": ""
-
+        trademark: ""
       }
-    }
+    };
   },
   //组件挂载完毕执行一次 先于 mounted 之前
-  beforeMount(){
-    Object.assign(this.searchParams,this.$route.query,this.$route.params)
+  beforeMount() {
+    //在发请求之前，把接口需要传递参数，进行整理（在给服务器发请求之前，把参数整理好，服务器就会返回查询的数据)
+    Object.assign(this.searchParams, this.$route.query, this.$route.params);
   },
 
   //组件挂载完毕执行一次【仅仅执行一次】
   mounted() {
-    this.getData()
+    this.getData();
   },
   computed: {
     //mapGetters 里面传递的是数组 因为getters计算是没有划分模块【home , search】
 
-    ...mapGetters(['goodsList', 'attrsList', 'trademarkList'])
+    ...mapGetters(["goodsList", "attrsList", "trademarkList"])
   },
   methods: {
     getData() {
       //向服务器爱请求获取search模块数据（根据参数不同返回不同的数据进行展示)
       ////把这次请求封装为一个函数:当你需要在调用的时候调用即可
 
-      this.$store.dispatch("getSearchList", this.searchParams)
+      this.$store.dispatch("getSearchList", this.searchParams);
+    }
+  },
+  //数据监听  监听组件实例身上的属性的属性值变化
+  watch: {
+    //监听路由的信息是否发生变化  发生变化再次请求
+    $route(newValue, oldValue) {
+      //再次整理给服务器参数
+      Object.assign(this.searchParams, this.$route.query, this.$route.params);
+      this.getData();
+      //每一次请求完毕，应该把相应的1、2、3级分类的id置空的，让他接受下一次的相应1、2、3
+      //分类名字与关键字不用清理:因为每一次路由发生变化的时候，都会给他赋予新的数掘
+
+      this.searchParams.category1Id=''
+      this.searchParams.category2Id=''
+      this.searchParams.category3Id=''
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
