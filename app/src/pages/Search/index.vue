@@ -12,19 +12,12 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">
-              iphone
-              <i>×</i>
+
+            <li class="with-x" v-if="searchParams.categoryName">
+              {{ searchParams.categoryName }}
+              <i @click="removeCategoryName">×</i>
             </li>
-            <li class="with-x">
-              华为
-              <i>×</i>
-            </li>
-            <li class="with-x">
-              OPPO
-              <i>×</i>
-            </li>
+
           </ul>
         </div>
 
@@ -69,18 +62,14 @@
                   </div>
                   <div class="price">
                     <strong>
-                      <em>¥</em>
+                      <em>¥</em>&nbsp;
                       <i>{{ good.price }}.00</i>
                     </strong>
                   </div>
                   <div class="attr">
-                    <a
-                      target="_blank"
-                      href="item.html"
-                      title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
-                    >
+                    <a target="_blank" href="item.html" title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】">
                       {{ good.
-                      title }}
+                        title }}
                     </a>
                   </div>
                   <div class="commit">
@@ -90,11 +79,7 @@
                     </i>
                   </div>
                   <div class="operate">
-                    <a
-                      href="success-cart.html"
-                      target="_blank"
-                      class="sui-btn btn-bordered btn-danger"
-                    >加入购物车</a>
+                    <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
                     <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
                   </div>
                 </div>
@@ -168,7 +153,7 @@ export default {
         //当前第几页 默认1
         pageNo: 1,
         //每一页展示 数据个数
-        pageSize: 3,
+        pageSize: 10,
         //平台售卖属性的参数
         props: [],
         //品牌
@@ -197,6 +182,24 @@ export default {
       ////把这次请求封装为一个函数:当你需要在调用的时候调用即可
 
       this.$store.dispatch("getSearchList", this.searchParams);
+    },
+    removeCategoryName() {
+      //把带给服务器的参数置空了，还需要向服务器发请求
+      //带给服务器参数说明可有可无的:如果属性值为空的字符串还是会把相应的字段带给服务器//但是你把相应的字段变为undefined，当前这个字段不会带给服务器
+
+      this.searchParams.categoryName = undefined
+      this.searchParams.category1Id = undefined
+      this.searchParams.category2Id = undefined
+      this.searchParams.category3Id = undefined
+      this.getData()
+      //地址栏也需要需改:进行路由跳转(现在的路由跳转只是跳转到自己这里)
+      //严谨:本意是删除query，如果路径当中出现params不应该删除，路由跳转的时候应该带着
+
+      if (this.$route.params) {
+        this.$router.push({ name: 'search', params: this.$route.params })
+
+      }
+
     }
   },
   //数据监听  监听组件实例身上的属性的属性值变化
@@ -209,9 +212,9 @@ export default {
       //每一次请求完毕，应该把相应的1、2、3级分类的id置空的，让他接受下一次的相应1、2、3
       //分类名字与关键字不用清理:因为每一次路由发生变化的时候，都会给他赋予新的数掘
 
-      this.searchParams.category1Id=''
-      this.searchParams.category2Id=''
-      this.searchParams.category3Id=''
+      this.searchParams.category1Id = ''
+      this.searchParams.category2Id = ''
+      this.searchParams.category3Id = ''
     }
   }
 };
