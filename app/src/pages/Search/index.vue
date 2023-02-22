@@ -27,12 +27,17 @@
               {{ searchParams.trademark.split(":")[1] }}
               <i @click="removeTrademark">×</i>
             </li>
+            <!-- 售卖属性 的面包屑 -->
+            <li class="with-x" v-for="(attrValue, index) in searchParams.props" :key="index">
+              {{ attrValue.split(":")[1] }}
+              <i @click="removeAttr(index)">×</i>
+            </li>
 
           </ul>
         </div>
-        
+
         <!--selector-->
-        <SearchSelector @trademarkInfo="trademarkInfo" />
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -63,8 +68,8 @@
           <!-- 销售产品list -->
           <div class="goods-list">
             <ul class="yui3-g">
-             
-              <li class="yui3-u-1-5" v-for="(good,index) in goodsList" :key="good.id">
+
+              <li class="yui3-u-1-5" v-for="(good, index) in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
                     <a href="item.html" target="_blank">
@@ -213,9 +218,9 @@ export default {
 
     },
     //删除关键字
-    removeKeyword(){
+    removeKeyword() {
       //给服务器带的参数searchParams的keyword置空
-      this.searchParams.keyword=undefined
+      this.searchParams.keyword = undefined
       this.getData()
 
       //通知兄弟组件header 清楚关键字
@@ -229,18 +234,38 @@ export default {
 
     },
     //自定义事件回调
-    trademarkInfo(trademark){
-      
-      this.searchParams.trademark=`${trademark.tmId}:${trademark.tmName}`
+    trademarkInfo(trademark) {
+
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`
       //再次发请求获取search模块数据
       this.getData()
     },
     //删除品牌的信息
-    removeTrademark(){
-      this.searchParams.trademark=""
+    removeTrademark() {
+      this.searchParams.trademark = ""
+      this.getData()
+    },
+    //收集平台属性的地方
+    attrInfo(attr, attrValue) {
+      //["属性ID:属性值:属性名"]
+      //参数格式整理好
+      let props = `${attr.attrId}:${attrValue}:${attr.attrName}`
+      //数组去重
+      if (this.searchParams.props.indexOf(props) == -1) {
+        this.searchParams.props.push(props)
+      }
+
+      //再发请求
+      this.getData()
+
+    },
+    //删除售卖属性 面包屑
+    removeAttr(index) {
+      this.searchParams.props.splice(index, 1)
+      //再发请求
       this.getData()
     }
-    },
+  },
   //数据监听  监听组件实例身上的属性的属性值变化
   watch: {
     //监听路由的信息是否发生变化  发生变化再次请求
