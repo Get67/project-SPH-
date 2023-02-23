@@ -14,3 +14,47 @@ vuex:万能
 插槽:父子
 pubsub-js:万能
 $bus : 全局事件总线
+
+
+
+////////////////////////////////////////////////////////////////////
+今天课程中小重点:排序操作
+1:综合,
+2:价格asc:升序,desc:降序
+示例:"1:desc"
+
+
+1.1问题
+order属性的属性值最多有多少种写法:
+1:asc
+1:desc
+2:asc
+2:desd
+
+
+1.2 考虑  类名
+ 谁应该有类名  :通过order属性值当中是包含1（综合）|包含2（价格）
+
+
+1.3 考虑 箭头
+谁应该有箭头        谁有类名 谁又箭头
+
+https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=3913542
+箭头图标 协议https:
+//at.alicdn.com/t/c/font_3913542_3udygbi7nwt.css
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

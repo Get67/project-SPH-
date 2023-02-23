@@ -43,25 +43,15 @@
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
+              <!-- //排序结构 -->
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{active:isOne}">
+                  <a>综合<span v-show="isOne" class="iconfont" :class="{'icon-up':isaAsc,'icon-down':isaDesc}"></span></a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
+                <li :class="{active:isTwo}">
+                  <a>价格<span v-show="isTwo" class="iconfont" :class="{'icon-up':isaAsc,'icon-down':isaDesc}"></span></a>
                 </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
-                </li>
+
               </ul>
             </div>
           </div>
@@ -164,8 +154,8 @@ export default {
         categoryName: "",
         //关键字
         keyword: "",
-        //排序
-        order: "",
+        //排序  综合 降序
+        order: "2:desc",
         //当前第几页 默认1
         pageNo: 1,
         //每一页展示 数据个数
@@ -190,7 +180,20 @@ export default {
   computed: {
     //mapGetters 里面传递的是数组 因为getters计算是没有划分模块【home , search】
 
-    ...mapGetters(["goodsList", "attrsList", "trademarkList"])
+    ...mapGetters(["goodsList", "attrsList", "trademarkList"]),
+    isOne(){
+      return this.searchParams.order.indexOf('1') != -1
+    },
+    isTwo(){
+      return this.searchParams.order.indexOf('2') != -1
+    },
+    isaAsc(){
+      return this.searchParams.order.indexOf('asc') != -1
+    },
+    isaDesc(){
+      return this.searchParams.order.indexOf('desc') != -1
+    },
+
   },
   methods: {
     getData() {
@@ -264,7 +267,8 @@ export default {
       this.searchParams.props.splice(index, 1)
       //再发请求
       this.getData()
-    }
+    },
+
   },
   //数据监听  监听组件实例身上的属性的属性值变化
   watch: {
