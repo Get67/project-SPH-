@@ -45,10 +45,10 @@
             <div class="navbar-inner filter">
               <!-- //排序结构 -->
               <ul class="sui-nav">
-                <li :class="{active:isOne}">
+                <li :class="{active:isOne}" @click="changeOrder(1)">
                   <a>综合<span v-show="isOne" class="iconfont" :class="{'icon-up':isaAsc,'icon-down':isaDesc}"></span></a>
                 </li>
-                <li :class="{active:isTwo}">
+                <li :class="{active:isTwo}"  @click="changeOrder(2)">
                   <a>价格<span v-show="isTwo" class="iconfont" :class="{'icon-up':isaAsc,'icon-down':isaDesc}"></span></a>
                 </li>
 
@@ -154,8 +154,8 @@ export default {
         categoryName: "",
         //关键字
         keyword: "",
-        //排序  综合 降序
-        order: "2:desc",
+        //排序 默认 综合 降序
+        order: "1:desc",
         //当前第几页 默认1
         pageNo: 1,
         //每一页展示 数据个数
@@ -268,7 +268,29 @@ export default {
       //再发请求
       this.getData()
     },
+    //排序操作
+    changeOrder(flag){
+      //flag 形参标记 代表点击 综合 就是1  价格就是2 
+      let originOrder = this.searchParams.order
+      let originFlag = this.searchParams.order.split(":")[0]
+      let originSort = this.searchParams.order.split(":")[1]
+      //console.log(originFlag,originSort,flag);
+      let newOrder = ''
+      if (flag == originFlag) {
+        //点综合
+        newOrder = `${originFlag}:${originSort=="desc"?"asc":"desc"}`
+        
+      }else{
+        //点价格
+        newOrder=`${flag}:${"desc"}`
 
+      }
+      //将新的order赋予 searchParams
+      this.searchParams.order= newOrder
+      this.getData()
+
+
+    }
   },
   //数据监听  监听组件实例身上的属性的属性值变化
   watch: {
