@@ -28,7 +28,10 @@ import "swiper/css/swiper.css"
 //引入mockserver.js
 import '@/mock/mockServe'
 
-
+//引入分页器
+import Pagenation from '@/components/Pagenation'
+//注册分液器
+Vue.component(Pagenation.name,Pagenation)
 
 new Vue({
   render: h => h(App),
