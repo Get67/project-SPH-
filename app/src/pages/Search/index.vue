@@ -245,11 +245,11 @@ export default {
       //console.log(originFlag,originSort,flag);
       let newOrder = ''
       if (flag == originFlag) {
-        //点综合
+        //第一次点
         newOrder = `${originFlag}:${originSort=="desc"?"asc":"desc"}`
         
       }else{
-        //点价格
+        
         newOrder=`${flag}:${"desc"}`
 
       }
