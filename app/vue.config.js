@@ -5,6 +5,7 @@ module.exports = defineConfig({
   //代理跨域
   devServer: {
     open: true,
+
     host: 'localhost',
     port: 8080,
     proxy:{

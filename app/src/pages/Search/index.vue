@@ -92,8 +92,8 @@
               </li>
             </ul>
           </div>
-          <!-- 分页 -->
-          <Pagenation/>
+          <!-- 分页    测试阶段  以后会替换-->
+          <Pagenation :pageNo="searchParams.pageNo" :pageSize="searchParams.pageSize" :total="total" :continues="5" @getPageNo="getPageNo"/>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters , mapState} from "vuex";
 export default {
   name: "Search",
 
@@ -127,7 +127,7 @@ export default {
         //当前第几页 默认1
         pageNo: 1,
         //每一页展示 数据个数
-        pageSize: 10,
+        pageSize: 3,
         //平台售卖属性的参数
         props: [],
         //品牌
@@ -161,9 +161,19 @@ export default {
     isaDesc(){
       return this.searchParams.order.indexOf('desc') != -1
     },
+    // 获取search模块  一共有多少商品数据
+    ...mapState({
+      total:state => state.search.searchList.total
+    })
 
   },
   methods: {
+    //获取当前第几页
+    getPageNo(pageNo){
+      //整理带给服务器的参数
+      this.searchParams.pageNo = pageNo
+      this.getData()
+    },
     getData() {
       //向服务器爱请求获取search模块数据（根据参数不同返回不同的数据进行展示)
       ////把这次请求封装为一个函数:当你需要在调用的时候调用即可
