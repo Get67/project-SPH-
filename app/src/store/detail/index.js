@@ -31,6 +31,10 @@ const getters = {
     },
     skuInfo(state){
         return state.goodInfo.skuInfo||{}
+    },
+    //产品售卖属性的简化
+    spuSaleAttrList(state){
+        return state.goodInfo.spuSaleAttrList||[]
     }
 
 
