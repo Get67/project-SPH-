@@ -72,11 +72,9 @@
               <div class="choosed"></div>
               <dl v-for="(spuSaleAttr, index) in spuSaleAttrList" :key="spuSaleAttr.id">
                 <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
-                <dd 
-                changepirce="0" 
-                :class="{ active: spuSaleAttrValue.isChecked == 1 }"
-                v-for="(spuSaleAttrValue, index) in spuSaleAttr.spuSaleAttrValueList" :key="spuSaleAttrValue.id" 
-                @click="changeActive(spuSaleAttrValue,spuSaleAttr.spuSaleAttrValueList)">{{
+                <dd changepirce="0" :class="{ active: spuSaleAttrValue.isChecked == 1 }"
+                  v-for="(spuSaleAttrValue, index) in spuSaleAttr.spuSaleAttrValueList" :key="spuSaleAttrValue.id"
+                  @click="changeActive(spuSaleAttrValue, spuSaleAttr.spuSaleAttrValueList)">{{
                     spuSaleAttrValue.saleAttrValueName }}</dd>
 
               </dl>
@@ -84,9 +82,10 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt">
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model.number="skuNum" 
+                @change="changeSkuNum">
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:skuNUm=1">-</a>
               </div>
               <div class="add">
                 <a href="javascript:">加入购物车</a>
@@ -344,9 +343,13 @@ import ImageList from './ImageList/ImageList'
 import Zoom from './Zoom/Zoom'
 import { mapGetters } from 'vuex'
 
+
 export default {
   name: 'Detail',
-
+  data() {
+    //购买产品个数
+    return {skuNum : 1}
+  },
   components: {
     ImageList,
     Zoom
@@ -372,6 +375,18 @@ export default {
       });
       //点的那个有高亮
       saleAttrValue.isChecked = "1";
+    },
+    changeSkuNum(event){
+      //用户输入的文本 *1
+      let value =  event.target.value * 1;
+      //如果用户输入进来是非法的
+      //判断
+      if(isNaN(value)||value <1 ){
+        
+        this.skuNum =1
+      }else{
+        this.skuNum = parseInt(value)
+      }
     }
   }
 }
