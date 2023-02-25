@@ -72,8 +72,12 @@
               <div class="choosed"></div>
               <dl v-for="(spuSaleAttr, index) in spuSaleAttrList" :key="spuSaleAttr.id">
                 <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
-                <dd changepirce="0" :class="{active:spuSaleAttrValue.isChecked == 1}" v-for="(spuSaleAttrValue, index) in spuSaleAttr.spuSaleAttrValueList"
-                  :key="spuSaleAttrValue.id">{{ spuSaleAttrValue.saleAttrValueName }}</dd>
+                <dd 
+                changepirce="0" 
+                :class="{ active: spuSaleAttrValue.isChecked == 1 }"
+                v-for="(spuSaleAttrValue, index) in spuSaleAttr.spuSaleAttrValueList" :key="spuSaleAttrValue.id" 
+                @click="changeActive(spuSaleAttrValue,spuSaleAttr.spuSaleAttrValueList)">{{
+                    spuSaleAttrValue.saleAttrValueName }}</dd>
 
               </dl>
 
@@ -355,6 +359,19 @@ export default {
     ...mapGetters(['categoryView', 'skuInfo', 'spuSaleAttrList']),
     skuImageList() {
       return this.skuInfo.skuImageList || [];
+    }
+  },
+  methods: {
+
+    //产品售卖属性值切换高亮
+    //遍历全部售卖属性值isChecked为零没有高亮了
+
+    changeActive(saleAttrValue, arr) {
+      arr.forEach((item) => {
+        item.isChecked = "0";
+      });
+      //点的那个有高亮
+      saleAttrValue.isChecked = "1";
     }
   }
 }
