@@ -32,9 +32,10 @@ export const reqGetSearchInfo = (paramas) =>requests({url:"/api/list",method:'po
 
 
 
+//获取产品详情信息的接口 url： /api/item/{skuId}
+//   get 带产品id
 
-
-
+export const reqGoodsInfo = (skuId) =>requests({url:`/api/item/${skuId}`,method:'get'})
 
 
 

@@ -44,7 +44,7 @@ export default [
         redirect:"/home"
     },
     {
-        path:'/Detail/:skuid?',
+        path:'/Detail/:skuId?',
         component:Detail,
         meta:{show:true}
     },
