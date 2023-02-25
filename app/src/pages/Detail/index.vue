@@ -21,9 +21,9 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom />
+          <Zoom :skuImageList="skuImageList" />
           <!-- 小图列表 -->
-          <ImageList />
+          <ImageList :skuImageList="skuImageList"/>
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -369,7 +369,10 @@ export default {
     this.$store.dispatch('getGoodInfo', this.$route.params.skuId)
   },
   computed: {
-    ...mapGetters(['categoryView','skuInfo'])
+    ...mapGetters(['categoryView','skuInfo']),
+    skuImageList(){
+      return this.skuInfo.skuImageList || [] ;
+    }
   }
 }
 </script>
