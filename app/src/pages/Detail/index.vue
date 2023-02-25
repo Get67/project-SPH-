@@ -82,13 +82,13 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" v-model.number="skuNum" 
-                @change="changeSkuNum">
+                <input autocomplete="off" class="itxt" v-model.number="skuNum" @change="changeSkuNum">
                 <a href="javascript:" class="plus" @click="skuNum++">+</a>
-                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:skuNUm=1">-</a>
+                <a href="javascript:" class="mins" @click="skuNum > 1 ? skuNum-- : skuNUm = 1">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addshopcar">加入购物车</a>
+                <!-- 以前路由跳转 a跳 b   这里在加入购物车 在进行路由跳转前 发请求 把产品信息通知服务器 服务器进行存储 -->
               </div>
             </div>
           </div>
@@ -348,7 +348,7 @@ export default {
   name: 'Detail',
   data() {
     //购买产品个数
-    return {skuNum : 1}
+    return { skuNum: 1 }
   },
   components: {
     ImageList,
@@ -376,17 +376,27 @@ export default {
       //点的那个有高亮
       saleAttrValue.isChecked = "1";
     },
-    changeSkuNum(event){
+    changeSkuNum(event) {
       //用户输入的文本 *1
-      let value =  event.target.value * 1;
+      let value = event.target.value * 1;
       //如果用户输入进来是非法的
       //判断
-      if(isNaN(value)||value <1 ){
-        
-        this.skuNum =1
-      }else{
+      if (isNaN(value) || value < 1) {
+
+        this.skuNum = 1
+      } else {
         this.skuNum = parseInt(value)
       }
+    },
+    addshopcar() {
+      //派发action
+      //1:发请求---将产品加入到数据库（通知服务器)
+      this.$store.dispatch('addOrUpdateShopCart',{skuId:this.$route.params.skuId,skuNum:this.skuNum})
+      //2:服务器存储成功-----进行路由跳转
+      //3:失败，给用户进行提示
+
+
+
     }
   }
 }
