@@ -31,3 +31,23 @@
 
 
 5)删除某一个产品
+5)修改产品个数【函数节流】
+
+
+6 修改产品状态
+7 全选
+
+
+删除方法 最后一个商品没法删除
+去 仓库吧gette 里面的 
+const getters = {
+    cartList(state) {
+        return state.cartList[0] || {}
+    },
+
+};
+
+【0】/ {空}
+
+这样子删除完了之后也不会出线找不到  ‘cartInfoList‘
+Error in render: “TypeError: Cannot read properties of undefined (reading ‘cartInfoList‘)“

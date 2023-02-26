@@ -26,14 +26,14 @@
           <li class="cart-list-con5">
             <a href="javascript:void(0)" class="mins" @click="handler('minus', -1, cart)">-</a>
             <input autocomplete="off" type="text" minnum="1" class="itxt" :value="(cart.skuNum)"
-              @change="handler('change', $event.target.value * 1 - cart.skuNum, cart)">
+              @change="handler('change', $event.target.value * 1, cart)">
             <a href="javascript:void(0)" class="plus" @click="handler('add', 1, cart)">+</a>
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{ cart.skuNum * cart.skuPrice }}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a  class="sindelet" @click="deleteCartById(cart)">删除</a>
             <br>
             <a href="#none">移到收藏</a>
           </li>
@@ -60,7 +60,7 @@
           <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <a class="sum-btn" target="_blank">结算</a>
         </div>
       </div>
     </div>
@@ -71,6 +71,7 @@
 import { mapGetters } from 'vuex';
 export default {
   name: 'ShopCart',
+  
   mounted() {
     this.getData()
 
@@ -79,20 +80,78 @@ export default {
     getData() {
       this.$store.dispatch('getCartList')
     },
-    handler(type, disNum, cart) {
+     async handler(type, disNum, cart) {
       //type:为了区分这三个元素
       //disNum形参:+变化量（1)-变化量（-1)
       // input最终的个数(并不是变化量)
       //cart:哪一个产品【身上有id】
+      switch (type) {
+        case "add":
+          //带给服务器变化的量
+          disNum = 1
+          break;
+        case "minus":
+          //判断产品 个数大于 1 才能负一
 
-      console.log("****", type, disNum, cart);
-    }
+          // if (cart.skuNum > 1) {
+          //   disNum = -1
+          // } else {
+          //   disNum = 0
+          // }
+          //如果出现小于等于 1 传递0 给服务器 原封不动 
+          disNum = cart.skuNum > 1 ? -1 : 0
+          break;
+        case "change":
+            if (isNaN(disNum)|| disNum <1 ) {
+              disNum = 0
+            }else{
+              disNum = parseInt(disNum) - cart.skuNum
+            }
+            // disNum = (isNaN(disNum)||disNum<1)? 0: disNum = parseInt(disNum) - cart.skuNum
+         break
+      }
+      //派发action
+      try {
+        await this.$store.dispatch('addOrUpdateShopCart', {
+          skuId: cart.skuId,
+          skuNum: disNum
+        })
+        this.getData()
+      } catch (error) {
+       
+      }
+
+    },
+    //删除某个产品的id
+    // async deleteCartById(cart){
+    //   try {
+    //     await this.$store.dispatch('deleteCartListBySkuId',cart.skuId)
+      
+    //     this.getData();
+        
+    //   } catch (error) {
+    //       alert(error.message)
+    //   }
+    // }
+    async deleteCartById(cart) {
+      //整理参数
+      let skuId = cart.skuId;
+      try {
+        //删除商品成功
+        await this.$store.dispatch("deleteCartListBySkuId", skuId);
+        //再次获取购物车最新的数据
+        this.getData();
+      } catch (error) {
+        alert("删除失败");
+      }
+    },
+
   },
   computed: {
     ...mapGetters(["cartList"]),
     //购物车的数据
     cartInfoList() {
-      return this.cartList.cartInfoList || [];
+      return this.cartList.cartInfoList||[];
     },
     //计算总价
     totalPrice() {

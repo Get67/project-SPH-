@@ -52,9 +52,10 @@ export const reqAddOrUpdateShopCart = (skuId, skuNum) => requests({ url: `/api/c
 
 export const reqCartList = () => requests({ url: '/api/cart/cartList', method: 'get' })
 
+//删除购物 产品的接口
+// url /api/cart/deleteCart/{skuId}       method:DELETE
 
-
-
+export const reqDeleteCartById = (skuId) => requests({ url: `/api/cart/deleteCart/${skuId} `, method: 'delete' })
 
 
 
