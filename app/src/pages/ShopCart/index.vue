@@ -13,23 +13,23 @@
       <div class="cart-body">
         <ul class="cart-list"  v-for="(cart,index) in cartInfoList" :key="cart.id">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list">
+            <input type="checkbox" name="chk_list" :checked="cart.isChecked==1">
           </li>
           <li class="cart-list-con2">
-            <img src="./images/goods1.png">
-            <div class="item-msg">米家（MIJIA） 小米小白智能摄像机增强版 1080p高清360度全景拍摄AI增强</div>
+            <img :src="cart.imgUrl">
+            <div class="item-msg">{{cart.skuName}}</div>
           </li>
 
           <li class="cart-list-con4">
-            <span class="price">399.00</span>
+            <span class="price">{{cart.skuPrice}}</span>
           </li>
           <li class="cart-list-con5">
             <a href="javascript:void(0)" class="mins">-</a>
-            <input autocomplete="off" type="text" value="1" minnum="1" class="itxt">
+            <input autocomplete="off" type="text"  minnum="1" class="itxt" :value="cart.skuNum">
             <a href="javascript:void(0)" class="plus">+</a>
           </li>
           <li class="cart-list-con6">
-            <span class="sum">399</span>
+            <span class="sum">{{cart.skuNum*cart.skuPrice}}</span>
           </li>
           <li class="cart-list-con7">
             <a href="#none" class="sindelet">删除</a>
@@ -42,7 +42,7 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox">
+        <input class="chooseAll" type="checkbox" :checked="isAllCheck">
         <span>全选</span>
       </div>
       <div class="option">
@@ -52,10 +52,10 @@
       </div>
       <div class="money-box">
         <div class="chosed">已选择
-          <span>0</span>件商品</div>
+          <span>1</span>件商品</div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
-          <i class="summoney">0</i>
+          <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
           <a class="sum-btn" href="###" target="_blank">结算</a>
@@ -84,6 +84,18 @@ import { mapGetters } from 'vuex';
     cartInfoList() {
       return this.cartList.cartInfoList||[];
     },
+    //计算总价
+    totalPrice(){
+      let sum = 0 ;
+      this.cartInfoList.forEach(item=>{
+        sum += item.skuNum * item.skuPrice
+      });
+      return sum
+    },
+    isAllCheck(){
+      //判断 全选框  全选吗
+      return this.cartInfoList.every(item=>item.isChecked == 1)
+    }
   }
   }
 </script>
