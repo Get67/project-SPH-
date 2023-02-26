@@ -388,12 +388,33 @@ export default {
         this.skuNum = parseInt(value)
       }
     },
-    addshopcar() {
+    async addshopcar() {
       //派发action
       //1:发请求---将产品加入到数据库（通知服务器)
-      this.$store.dispatch('addOrUpdateShopCart',{skuId:this.$route.params.skuId,skuNum:this.skuNum})
+      //当前这里是派发一个action，也向服务器发请求
+      //判断加入购物车是成功还是失败了
+//当前的这个函数如果执行返回Promise 
+
+
+      try{
+         await this.$store.dispatch('addOrUpdateShopCart',{skuId:this.$route.params.skuId,skuNum:this.skuNum})
       //2:服务器存储成功-----进行路由跳转
+      //将产品信息带过去
+      sessionStorage.setItem("SKUINFO",JSON.stringify(this.skuInfo))
+      this.$router.push({name:'addCartSuccess',query:{skuNum:this.skuNum}})
+      //4:在路由跳转的时候还需要将产品的信息带给下一级的路由组件
+      //一些简单的数据skuNum，通过query形式给路由组件传递过去|
+        //会话存储 结束就没
+      }catch(error){
+        alert(error.message)
+      }
+
+
+
+
       //3:失败，给用户进行提示
+
+
 
 
 

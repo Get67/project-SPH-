@@ -23,7 +23,12 @@ const actions = {
         //服务器写入数据成功，并没有返回其他的数据，只是返回code=200，代表这次操作成功
         //因为服务器没有返回其余的数据  所以不用三连环  把数据存储进仓库中.
         let result = await reqAddOrUpdateShopCart(skuId, skuNum)
-        console.log(result);
+        if (result.code == 200) {
+            return "ok"
+        }else{
+            //代表加入购物车失败
+            return Promise.reject(new Error('faile'))
+        }
     }
 
 };
