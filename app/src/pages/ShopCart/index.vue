@@ -13,7 +13,7 @@
       <div class="cart-body">
         <ul class="cart-list" v-for="(cart, index) in cartInfoList" :key="cart.id">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" :checked="cart.isChecked == 1">
+            <input type="checkbox" name="chk_list" :checked="cart.isChecked == 1" @change="updateChecked(cart, $event)">
           </li>
           <li class="cart-list-con2">
             <img :src="cart.imgUrl">
@@ -33,7 +33,7 @@
             <span class="sum">{{ cart.skuNum * cart.skuPrice }}</span>
           </li>
           <li class="cart-list-con7">
-            <a  class="sindelet" @click="deleteCartById(cart)">删除</a>
+            <a class="sindelet" @click="deleteCartById(cart)">删除</a>
             <br>
             <a href="#none">移到收藏</a>
           </li>
@@ -72,7 +72,7 @@ import throttle from 'lodash/throttle';
 import { mapGetters } from 'vuex';
 export default {
   name: 'ShopCart',
-  
+
   mounted() {
     this.getData()
 
@@ -81,7 +81,7 @@ export default {
     getData() {
       this.$store.dispatch('getCartList')
     },
-     handler: throttle( async function(type, disNum, cart) {
+    handler: throttle(async function (type, disNum, cart) {
       //type:为了区分这三个元素
       //disNum形参:+变化量（1)-变化量（-1)
       // input最终的个数(并不是变化量)
@@ -103,13 +103,13 @@ export default {
           disNum = cart.skuNum > 1 ? -1 : 0
           break;
         case "change":
-            if (isNaN(disNum)|| disNum <1 ) {
-              disNum = 0
-            }else{
-              disNum = parseInt(disNum) - cart.skuNum
-            }
-            // disNum = (isNaN(disNum)||disNum<1)? 0: disNum = parseInt(disNum) - cart.skuNum
-         break
+          if (isNaN(disNum) || disNum < 1) {
+            disNum = 0
+          } else {
+            disNum = parseInt(disNum) - cart.skuNum
+          }
+          // disNum = (isNaN(disNum)||disNum<1)? 0: disNum = parseInt(disNum) - cart.skuNum
+          break
       }
       //派发action
       try {
@@ -119,17 +119,17 @@ export default {
         })
         this.getData()
       } catch (error) {
-       
+
       }
 
-    },1000),
+    }, 1000),
     //删除某个产品的id
     // async deleteCartById(cart){
     //   try {
     //     await this.$store.dispatch('deleteCartListBySkuId',cart.skuId)
-      
+
     //     this.getData();
-        
+
     //   } catch (error) {
     //       alert(error.message)
     //   }
@@ -146,13 +146,26 @@ export default {
         alert("删除失败");
       }
     },
+    //修改某一个产品的勾选的状态
+    async updateChecked(cart, event) {
+      try {
+        //带给服务器的参数isChecked,不是布尔值,应该是e|1
+        let isChecked = event.target.checked ? "1" : "0"
+        //如果修改数据成功，再次获取服务器数据（购物车）
+        await this.$store.dispatch('updateCheckedById', { skuId: cart.skuId, isChecked: isChecked })
+        this.getData()
+      }catch (error) {
+        //如果失败
+        alert(error.message)
+      }
+    }
 
   },
   computed: {
     ...mapGetters(["cartList"]),
     //购物车的数据
     cartInfoList() {
-      return this.cartList.cartInfoList||[];
+      return this.cartList.cartInfoList || [];
     },
     //计算总价
     totalPrice() {
