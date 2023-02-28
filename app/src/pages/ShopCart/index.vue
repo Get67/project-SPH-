@@ -47,9 +47,9 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
-        <a href="#none">移到我的关注</a>
-        <a href="#none">清除下柜商品</a>
+        <a @click="deleteAllCheckedCart">删除选中的商品</a>
+        <a>移到我的关注</a>
+        <a>清除下柜商品</a>
       </div>
       <div class="money-box">
         <div class="chosed">已选择
@@ -154,12 +154,22 @@ export default {
         //如果修改数据成功，再次获取服务器数据（购物车）
         await this.$store.dispatch('updateCheckedById', { skuId: cart.skuId, isChecked: isChecked })
         this.getData()
-      }catch (error) {
+      } catch (error) {
         //如果失败
         alert(error.message)
       }
+    },
+    //删除全部选中产品
+    async deleteAllCheckedCart() {
+      try {
+        ///派发action
+        await this.$store.dispatch("deleteAllCheckedCart")
+        //再次请求 获取购物车 列表
+        this.getData()
+      } catch (error) {
+        alert(error.message)
+      }
     }
-
   },
   computed: {
     ...mapGetters(["cartList"]),

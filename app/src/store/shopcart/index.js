@@ -50,6 +50,19 @@ const actions = {
         } catch (error) {
             
         }
+    },
+    //删除全部勾选的产品
+    deleteAllCheckedCart({dispatch,getters}){
+        //context:小仓库，commit【提交mutations修改state】 getter计算属性 dispatch【派发action】 state【当前仓库数据】
+        //获取购物车全部的产品 是一个素组
+        let PromiseAll = []
+
+        getters.cartList.cartInfoList.forEach(item=>{
+            //调用函数 返回的promise
+           let promise = item.isChecked == 1 ? dispatch('deleteCartListBySkuId',item.skuId):""
+           PromiseAll.push(promise)
+        })
+        return Promise.all(PromiseAll)
     }
 };
 
