@@ -63,6 +63,18 @@ const actions = {
            PromiseAll.push(promise)
         })
         return Promise.all(PromiseAll)
+    },
+    //全选状态修改
+    updateAllCartIsChecked({dispatch,state},isChecked){
+        let PromiseAll = []
+        state.cartList[0].cartInfoList.forEach((item)=>{
+            let promise =dispatch("updateCheckedById",{
+                skuId:item.skuId,
+                isChecked
+            })
+            PromiseAll.push(promise)
+        })
+        return Promise.all(PromiseAll)
     }
 };
 
