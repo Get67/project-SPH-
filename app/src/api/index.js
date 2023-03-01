@@ -64,9 +64,17 @@ export const reqUpdateChecked = (skuId,isChecked) => requests({ url: `/api/cart/
 
 
 
+//4.1获取验证码----/api/user/passport/sendCode/{phone}
+export const reqGetCode = (phone)=>requests({
+url:`/api/user/passport/sendCode/${phone}`, method: 'get'
+})
 
 
-
+//注册
+//url:        /api/user/passport/register  method:post   phone code password
+//注册的接口
+export const reqUserRegister = (data)=>requests({url:`/api/user/passport/register`,method:'post',data});
+    
 
 
 
