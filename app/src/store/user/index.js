@@ -39,6 +39,7 @@ const actions = {
              return Promise.reject(new Error(result.message));
         }
    }
+   
 };
 
 const getters = {};
