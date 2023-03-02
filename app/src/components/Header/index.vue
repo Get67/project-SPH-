@@ -5,12 +5,16 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <p v-if="!userName">
             <span>请</span>
             <!-- 声明式导航务必要有to属性 -->
             <router-link to="/login">登录</router-link>
             <!-- <a href="###">登录</a> -->
             <router-link class="register" to="/register">免费注册</router-link>
+          </p>
+          <p v-else>
+            <a >{{ userName }}</a>
+            <a class="register" >退出</a>
           </p>
         </div>
         <div class="typeList">
@@ -54,6 +58,7 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 export default {
   name: "",
   data() {
@@ -110,6 +115,12 @@ export default {
     this.$bus.$on("clear",()=>{
       this.keyword=""
     })
+    //
+  },
+  computed:{
+    userName(){
+      return this.$store.state.user.userInfo.name
+    }
   }
 };
 </script>

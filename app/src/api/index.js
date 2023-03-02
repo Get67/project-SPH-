@@ -76,5 +76,25 @@ url:`/api/user/passport/sendCode/${phone}`, method: 'get'
 export const reqUserRegister = (data)=>requests({url:`/api/user/passport/register`,method:'post',data});
     
 
+//登录
+//   url: /api/user/passport/login  method:post phone password
+export const reqUserLogin = (data)=>requests({url:`/api/user/passport/login`,method:'post',data});
+
+
+//获取用户信息【需要带着用户的token向服务器要用户信息】
+//url /api/user/passport/auth/getUserInfo method:get
+
+export const reqUserInfo = ()=>requests({url:`/api/user/passport/auth/getUserInfo`,method:'get'});
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -44,17 +44,16 @@ p1lp2/p3:每一个都是Promise对象，如果有一个Promise失败，都失败
 
 4.1获取验证码----/api/user/passport/sendCode/{phone}
 
-
-
-
-
+4.2获取验证码的接口/api/user/passport/sendCode/{phone} get
 4.2注册用户
 
 5)登录业务
-
+5.1注册----通过数据库存储用户信息（名字、密码）
+5.2登录-----登录成功的时候，后台为了区分你这个用户是谁-服务器下发token【令牌:唯一标识符】登录接口:做的不完美，
 6）token令牌理解
 
 
+vuex 不持久
 
 
 
