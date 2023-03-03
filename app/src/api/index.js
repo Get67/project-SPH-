@@ -86,7 +86,9 @@ export const reqUserLogin = (data)=>requests({url:`/api/user/passport/login`,met
 
 export const reqUserInfo = ()=>requests({url:`/api/user/passport/auth/getUserInfo`,method:'get'});
 
-
+//退出登录
+// URL:/api/user/passport/logout get
+export const reqLogout = ()=>requests({url:`/api/user/passport/logout`,method:'get'});
 
 
 

@@ -1,11 +1,12 @@
 //登录与注册
 
-import { reqGetCode, reqUserLogin, reqUserRegister, reqUserInfo } from "@/api";
+import { reqGetCode, reqUserLogin, reqUserRegister, reqUserInfo,reqLogout } from "@/api";
 
+import { setToken,getToken,removeToken } from "@/utils/token";
 const state = {
     code: "",
-    token: "",
-    userInfo:[]
+    token: getToken(),
+    userInfo:{}
 
 };
 
@@ -16,8 +17,16 @@ const mutations = {
     USERLOGIN(state, token) {
         state.token = token
     },
-    GETUSERINFO(state,userInfo){
+    GETUSERINFO(state, userInfo) {
         state.userInfo = userInfo;
+    },
+    CLEAR(state){
+        //帮仓库中先夫用户信息清空
+
+        state.token = "";
+        state.userInfo={},
+        //清空本地存储
+        removeToken()
     }
 
 };
@@ -54,7 +63,10 @@ const actions = {
         //将来经常通过带token找服务器要用户信息进行展示
 
         if (result.code == 200) {
+            //已经成功 已经有token
             commit('USERLOGIN', result.data.token)
+            //持久化存储token
+            setToken(result.data.token)
             return 'ok'
         } else {
             return Promise.reject(new Error('faile'))
@@ -66,8 +78,22 @@ const actions = {
         if (result.code == 200) {
             commit('GETUSERINFO', result.data)
             return 'ok'
-        } 
+        }
 
+    },
+    //退出登录
+    async userLogout({commit}){
+        //只是向服务器发起一次请求，通知服务器清除token
+//action里面不能操作state，提交mutation修改state
+
+        let result =  await reqLogout();
+        if (result.code == 200) {
+
+            commit("CLEAR")
+            return 'ok'
+        }else{
+            return Promise.reject(new Error(result.message));
+        }
     }
 
 };

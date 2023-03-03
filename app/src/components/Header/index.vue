@@ -13,8 +13,8 @@
             <router-link class="register" to="/register">免费注册</router-link>
           </p>
           <p v-else>
-            <a >{{ userName }}</a>
-            <a class="register" >退出</a>
+            <a>{{ userName }}</a>
+            <a class="register" @click="logout">退出登录</a>
           </p>
         </div>
         <div class="typeList">
@@ -38,17 +38,8 @@
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
-          <input
-            type="text"
-            id="autocomplete"
-            class="input-error input-xxlarge"
-            v-model="keyword"
-          />
-          <button
-            class="sui-btn btn-xlarge btn-danger"
-            type="button"
-            @click="goSearch"
-          >
+          <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
+          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
             搜索
           </button>
         </form>
@@ -94,31 +85,45 @@ export default {
 
       // 面试题4:路由组件能不 能传递props数据?
       //可以 三种写法
-        // this.$router.push({
-        //   name: "search",
-        //   params: { keyword: this.keyword },
-        // query: { k: this.keyword.toUpperCase() },
-        // });
+      // this.$router.push({
+      //   name: "search",
+      //   params: { keyword: this.keyword },
+      // query: { k: this.keyword.toUpperCase() },
+      // });
       if (this.$route.query) {
         let location = {
           name: "search",
           params: { keyword: this.keyword || undefined },
-          
+
         };
         location.query = this.$route.query;
         this.$router.push(location);
       }
     },
+    async logout() {
+      //退出登录需要做的事情
+      //1:需要发请求,通知服务器退出登录【清除一些数据:token】//2:清除项目当中的数据【userInfo、 token】
+
+
+      try {
+              //派发action
+      await this.$store.dispatch('userLogout')
+      // 成功回首页
+this.$router.push('/home')
+      } catch (error) {
+        
+      }
+    }
   },
-  mounted(){
+  mounted() {
     //全局事件总线 清除 
-    this.$bus.$on("clear",()=>{
-      this.keyword=""
+    this.$bus.$on("clear", () => {
+      this.keyword = ""
     })
     //
   },
-  computed:{
-    userName(){
+  computed: {
+    userName() {
       return this.$store.state.user.userInfo.name
     }
   }
@@ -127,7 +132,7 @@ export default {
 
 <style scoped lang="less">
 .header {
-  & > .top {
+  &>.top {
     background-color: #eaeaea;
     height: 30px;
     line-height: 30px;
@@ -158,7 +163,7 @@ export default {
         a {
           padding: 0 10px;
 
-          & + a {
+          &+a {
             border-left: 1px solid #b3aeae;
           }
         }
@@ -166,7 +171,7 @@ export default {
     }
   }
 
-  & > .bottom {
+  &>.bottom {
     width: 1200px;
     margin: 0 auto;
     overflow: hidden;
