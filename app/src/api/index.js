@@ -91,11 +91,16 @@ export const reqUserInfo = ()=>requests({url:`/api/user/passport/auth/getUserInf
 export const reqLogout = ()=>requests({url:`/api/user/passport/logout`,method:'get'});
 
 
+//获取用户地址信息
+//URL:/api/user/userAddress/auth/findUserAddressList method:get
+
+export const reqAddressInfo = ()=>requests({url:`/api/user/userAddress/auth/findUserAddressList`,method:'get'});
 
 
 
-
-
+///获取商品清单
+//URL: /api/order/auth/trade method:get
+export const reqOrderInfo = ()=>requests({url:`/api/order/auth/trade`,method:'get'});
 
 
 
