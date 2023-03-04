@@ -1,15 +1,21 @@
 // 路由配置信息
 //引入一级路由组件
-import Home from '@/pages/Home'
-import Search from '@/pages/Search'
-import Login from '@/pages/Login'
-import Register from '@/pages/Register'
-import Detail from '@/pages/Detail'
-import AddCartSuccess from '@/pages/AddCartSuccess'
-import ShopCart from '@/pages/ShopCart'
-import Trade from '@/pages/Trade'
+import Home from '@/pages/Home';
+import Search from '@/pages/Search';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import Detail from '@/pages/Detail';
+import AddCartSuccess from '@/pages/AddCartSuccess';
+import ShopCart from '@/pages/ShopCart';
+import Trade from '@/pages/Trade';
+import Pay from '@/pages/Pay';
 
 export default [
+    {
+        path:"/pay",
+        component:Pay,
+        meta:{show:true}
+    },
     {
         path:"/Home",
         component:Home,

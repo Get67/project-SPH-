@@ -12,9 +12,8 @@ import router from './router';
 import Carousel from '@/components/Carousel';
 Vue.component(Carousel.name,Carousel)
 
-// //测试
-// import {reqGetSearchInfo} from '@/api'
-// console.log(reqGetSearchInfo({}));
+//统一接口api文件夹里面全部请求函数
+import * as API from '@/api'
 
 
 //引入仓库
@@ -44,7 +43,8 @@ new Vue({
 
   //全局事件总线$bus的配置
   beforeCreate(){
-    Vue.prototype.$bus = this
+    Vue.prototype.$bus = this;
+    Vue.prototype.$API = API ;
   },
 
 
