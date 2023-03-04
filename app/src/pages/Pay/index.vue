@@ -65,7 +65,8 @@
         <div class="hr"></div>
 
         <div class="submit">
-          <router-link class="btn" to="/paysuccess">立即支付</router-link>
+
+          <a class="btn">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
