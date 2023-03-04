@@ -18,6 +18,14 @@
 
 
 4）elementuI使用＋按需引入
+已经 学习过组件库
+React (vue) :antd[PC] antd-mobile[移动端]
+
+vue : ElementUI[PC] vant[移动端]
+
+4.1饿了么 ui的按需引入 配置文件发生变化 要重启
+
+
 
 
 5)二维码生成qrcode

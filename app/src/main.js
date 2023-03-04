@@ -32,6 +32,15 @@ import Pagenation from '@/components/Pagenation'
 //注册分液器
 Vue.component(Pagenation.name,Pagenation)
 
+//饿了么ui+注册
+//ElementUI注册组件的时候，还有一种写法，挂在原型上
+import { Button , MessageBox} from 'element-ui';
+Vue.component(Button.name, Button);
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+
+
+
 new Vue({
   render: h => h(App),
   //注册路由：底下写法是kv一致省略V【router小写】

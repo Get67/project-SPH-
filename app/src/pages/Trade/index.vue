@@ -149,7 +149,7 @@ export default {
         "orderDetailList": this.orderInfo.detailArrayList  //商品清单
       }
       let result = await this.$API.reqSubmitOrder(tradeNo, data)
-      console.log(result);
+
       //提交成功
       if (result.code == 200 ) {
         this.orderId = result.data

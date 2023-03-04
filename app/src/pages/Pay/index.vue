@@ -1,5 +1,6 @@
 <template>
   <div class="pay-main">
+    <el-button type="primary" icon="el-icon-phone">测试</el-button>
     <div class="pay-container">
       <div class="checkout-tit">
         <h4 class="tit-txt">
@@ -66,7 +67,7 @@
 
         <div class="submit">
 
-          <a class="btn">立即支付</a>
+          <a class="btn" @click="open">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -103,6 +104,7 @@
        
     },
     methods:{
+      //获取支付
       async getPayInfo(){
         let result = await this.$API.reqPayInfo(this.orderId)
         if (result.code == 200) {
@@ -110,6 +112,17 @@
         } else {
           
         }
+      },
+      //弹出框
+      open() {
+        this.$alert('<strong>这是 <i>HTML</i> 片段</strong>', 'HTML 片段', {
+          dangerouslyUseHTMLString: true,
+          center:true ,//居中
+          showCancelButton:true,//显示取消按钮
+          cancelButtonText:"支付遇见问题",//取消按钮文本
+          confirmButtonText:"已支付",//确定按钮文本
+          showClose:false,//没有关闭按钮
+        });
       }
     }
   }
