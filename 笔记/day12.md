@@ -29,6 +29,15 @@ vue : ElementUI[PC] vant[移动端]
 
 
 5)二维码生成qrcode
+qrcode
+
+
+
+
+
+
+
+
 
 
 6)支付业务
