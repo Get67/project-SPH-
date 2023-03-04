@@ -121,6 +121,12 @@ export const reqPayInfo = (orderId)=>requests({url:`/api/payment/weixin/createNa
  export const reqPayStatus = (orderId)=>requests({url:`/api/payment/weixin/queryPayStatus/${orderId}`,method:'get'});
 
 
+//获得个人中心的数据
+// api/order/auth/{page}/{limit}    get
+
+export const reqMyOrderList = (page,limit)=>requests({url:`api/order/auth/${page}/${limit}`,method:'get'});
+
+
 
 
 
