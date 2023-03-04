@@ -90,9 +90,9 @@ export default {
   data() {
     return {
       payInfo: {},
-      timer:null,
+      timer: null,
       //支付code
-      code:''
+      code: 200
 
     }
 
@@ -130,28 +130,55 @@ export default {
         cancelButtonText: "支付遇见问题",//取消按钮文本
         confirmButtonText: "已支付",//确定按钮文本
         showClose: false,//没有关闭按钮
+        //关闭弹出框的配置
+        beforeClose: (type, instance, done) => {
+          //type:区分取消|确定按钮
+          //instance:当前组件实例
+          //done:关闭弹出框的方法
+          //promise报错的话也可以在alert函数前面加 await， 并且把后面的设置定时器函数放在alert的上一行
+          if (type == 'cancel') {
+
+            alert("联系管理员老李")
+
+            //清除定时器
+            clearInterval(this.timer)
+            this.timer = null
+            //关闭弹出框
+            done()
+          } else {
+            //判断 是否真的支付了
+            if (this.code == 200) {
+              clearInterval(this.timer)
+              this.timer = null
+              done()
+              this.$router.push('/paysuccess')
+            }
+          }
+
+        }
       });
       //你得要知道支付成功|失败
       //支付成功,路由的跳转，如果支付失败,提示信息
       //没有定时器 //开启定时器
       if (!this.timer) {
-         this.timer = setInterval(async()=>{
+        this.timer = setInterval(async () => {
           //发请求获取用户支付的状态
           let result = await this.$API.reqPayStatus(this.orderId)
-          if (result.code==205) {
+
+          if (result.code == 200) {
             //清除定时器
             clearInterval(this.timer)
-            this.timer =null;
+            this.timer = null;
             //支付成功返回 code
-            this.code =result.code
+            this.code = result.code
             //关闭弹窗
             this.$msgbox.close()
             //跳转下一页
             this.$router.push('/paysuccess')
           }
-         },1000)
+        }, 1000)
       } else {
-        
+
       }
     }
   }

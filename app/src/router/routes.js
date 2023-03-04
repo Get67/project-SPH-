@@ -10,8 +10,34 @@ import ShopCart from '@/pages/ShopCart';
 import Trade from '@/pages/Trade';
 import Pay from '@/pages/Pay';
 import PaySuccess from '@/pages/PaySuccess';
+import Center from '@/pages/Center';
+
+
+//引入二级路由组件
+import MyOrder from '@/pages/Center/myOrder';
+import GroupOrder from '@/pages/Center/groupOrder';
 
 export default [
+    {
+        path:"/center",
+        component:Center,
+        meta:{show:true},
+        //二级路由
+        children:[
+            {
+                path:'myOrder',
+                component:MyOrder,
+            },
+            {
+                path:'groupOrder',
+                component:GroupOrder,
+            },
+            {
+                path:'/center',
+                redirect:'/center/myOrder'
+            },
+        ]
+    },
     {
         path:"/paysuccess",
         component:PaySuccess,
