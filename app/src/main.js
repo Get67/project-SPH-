@@ -41,11 +41,11 @@ Vue.use(VueLazyload,{
 })
 
 
-//引入自定义插件
-import myPlugins from '@/plugins/myPlugins'
-Vue.use(myPlugins,{
-  name:"123"
-})
+// //引入自定义插件
+// import myPlugins from '@/plugins/myPlugins'
+// Vue.use(myPlugins,{
+//   name:"123"
+// })
 
 //饿了么ui+注册
 //ElementUI注册组件的时候，还有一种写法，挂在原型上
@@ -54,6 +54,9 @@ Vue.component(Button.name, Button);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 
+
+//引入校验 插件 vee
+import '@/plugins/validate'
 
 
 new Vue({
