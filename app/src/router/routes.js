@@ -1,7 +1,7 @@
 // 路由配置信息
 //引入一级路由组件
-import Home from '@/pages/Home';
-import Search from '@/pages/Search';
+// import Home from '@/pages/Home';
+// import Search from '@/pages/Search';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Detail from '@/pages/Detail';
@@ -16,6 +16,20 @@ import Center from '@/pages/Center';
 //引入二级路由组件
 import MyOrder from '@/pages/Center/myOrder';
 import GroupOrder from '@/pages/Center/groupOrder';
+
+
+//懒加载
+// const foo = ()=> import ('@/pages/Home')
+
+
+
+
+
+
+
+
+// 当打包构建应用时，javaScript包会变得非常大，影响页面加载。
+// 如果我们育把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，这样就更加高效了。
 
 export default [
     {
@@ -58,12 +72,12 @@ export default [
     },
     {
         path: "/Home",
-        component: Home,
+        component:()=> import ('@/pages/Home'),
         meta: { show: true }
     },
     {
         path: "/Search:keyword?",
-        component: Search,
+        component: ()=> import ('@/pages/Search'),
         meta: { show: true },
         name: "search",
 
