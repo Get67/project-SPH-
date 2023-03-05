@@ -81,7 +81,9 @@ export default {
         const { phone, password } = this;
         (phone && password) && await (this.$store.dispatch('userLogin', { phone, password }))
         // 跳转到home
-        this.$router.push('/home');
+        //看看路由中是不是有query参数 有就跳哪里  没有就home
+        let toPath =this.$route.query.redirect || '/home';
+        this.$router.push(toPath);
       } catch (error) {
         alert(error.message)
       }

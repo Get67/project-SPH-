@@ -19,92 +19,110 @@ import GroupOrder from '@/pages/Center/groupOrder';
 
 export default [
     {
-        path:"/center",
-        component:Center,
-        meta:{show:true},
+        path: "/center",
+        component: Center,
+        meta: { show: true },
         //二级路由
-        children:[
+        children: [
             {
-                path:'myOrder',
-                component:MyOrder,
+                path: 'myOrder',
+                component: MyOrder,
             },
             {
-                path:'groupOrder',
-                component:GroupOrder,
+                path: 'groupOrder',
+                component: GroupOrder,
             },
             {
-                path:'/center',
-                redirect:'/center/myOrder'
+                path: '/center',
+                redirect: '/center/myOrder'
             },
         ]
     },
     {
-        path:"/paysuccess",
-        component:PaySuccess,
-        meta:{show:true}
+        path: "/paysuccess",
+        component: PaySuccess,
+        meta: { show: true }
     },
     {
-        path:"/pay",
-        component:Pay,
-        meta:{show:true}
+        path: "/pay",
+        component: Pay,
+        meta: { show: true },
+        beforeEnter: (to, from, next) => {
+            if (from.path == '/Trade') {
+                next()
+            } else {
+                next(false)
+            }
+        }
+
     },
     {
-        path:"/Home",
-        component:Home,
-        meta:{show:true}
+        path: "/Home",
+        component: Home,
+        meta: { show: true }
     },
     {
-        path:"/Search:keyword?",
-        component:Search,
-        meta:{show:true},
-        name:"search",
-        
+        path: "/Search:keyword?",
+        component: Search,
+        meta: { show: true },
+        name: "search",
+
         // 面试题4:路由组件能不 能传递props数据?
         //布尔值写法
         // props:true,
         //对象写法  额外传递一些props
         // props:{a:1,b:2},
         //函数写法 可以params query 通过props传递给路由组件
-        props:($route)=>{
-            return {keyword:$route.params.keyword,k:$route.query.k}
+        props: ($route) => {
+            return { keyword: $route.params.keyword, k: $route.query.k }
         }
     },
     {
-        path:"/Login",
-        component:Login,
-        meta:{show:false}
+        path: "/Login",
+        component: Login,
+        meta: { show: false }
     },
     {
-        path:"/Register",
-        component:Register,
-        meta:{show:false}
+        path: "/Register",
+        component: Register,
+        meta: { show: false }
     },
     //重定向  项目跑起来的时候 访问立马定向到首页
     {
-        path:'*',
-        redirect:"/home"
+        path: '*',
+        redirect: "/home"
     },
     {
-        path:'/Detail/:skuId?',
-        component:Detail,
-        meta:{show:true}
+        path: '/Detail/:skuId?',
+        component: Detail,
+        meta: { show: true }
     },
     {
-        path:'/addCartSuccess',
-        name:'addCartSuccess',
-        component:AddCartSuccess,
-        meta:{show:true}
-    }, 
+        path: '/addCartSuccess',
+        name: 'addCartSuccess',
+        component: AddCartSuccess,
+        meta: { show: true }
+    },
     {
-        path:'/ShopCart',
-        name:'ShopCart',
-        component:ShopCart,
-        meta:{show:true}
-    },   
-     {
-        path:'/Trade',
-        name:'Trade',
-        component:Trade,
-        meta:{show:true}
+        path: '/ShopCart',
+        name: 'ShopCart',
+        component: ShopCart,
+        meta: { show: true }
+    },
+    {
+        path: '/Trade',
+        name: 'Trade',
+        component: Trade,
+        meta: { show: true },
+        //路由独享守卫
+        beforeEnter: (to, from, next) => {
+            //去交易页面必须从购物车来
+            //其他地方来的 都停在原地
+            if (from.path == '/ShopCart') {
+                next()
+            } else {
+                next(false)
+            }
+        }
     },
 ]

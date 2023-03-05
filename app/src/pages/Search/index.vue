@@ -65,7 +65,7 @@
                     <!-- 在路由跳转的时候切记别忘记带id（parmas） -->
 
                       <router-link :to="`/Detail/${good.id}`">
-                        <img :src="good.defaultImg" />
+                        <img v-lazy="good.defaultImg" />
                       </router-link>
                       
                   </div>

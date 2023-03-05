@@ -84,8 +84,17 @@ router.beforeEach(async (to, from, next) => {
 
         }
     } else {
-        //未登录
-        next()
+        //未登录  不能去交易相关的   不能去支付 【pay|paysuccess】 不能去个人中心
+        //未登录 全部去 登录页面  
+        let toPath = to.path;
+        if (toPath.indexOf('/trade')!=-1 ||toPath.indexOf('/pay')!=-1 ||toPath.indexOf('/center')!=-1 ) {
+            //把原本去的网站 带上
+            next('/login?redirect='+toPath)
+        }else{
+            //去的地方不是 上面home search shopcart 就让去
+            next()
+        }
+      
 
     }
 

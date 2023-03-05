@@ -32,6 +32,21 @@ import Pagenation from '@/components/Pagenation'
 //注册分液器
 Vue.component(Pagenation.name,Pagenation)
 
+//引入懒加载
+import VueLazyload from 'vue-lazyload';
+import xyjy from '@/assets/xyjy.gif';
+//注册懒加载
+Vue.use(VueLazyload,{
+  loading:xyjy
+})
+
+
+//引入自定义插件
+import myPlugins from '@/plugins/myPlugins'
+Vue.use(myPlugins,{
+  name:"123"
+})
+
 //饿了么ui+注册
 //ElementUI注册组件的时候，还有一种写法，挂在原型上
 import { Button , MessageBox} from 'element-ui';
